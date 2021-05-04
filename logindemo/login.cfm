@@ -1,36 +1,19 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <script src="./script/form.js"></script>
+    <title>login</title>
 </head>
-
 <body>
+    <cflock  timeout="10" scope="application">
+        <cfset dsn = application.dsn>
+    </cflock>
 
-    <form action="<cfoutput>#cgi.script_name#</cfoutput>" method="post">
-        <input type="hidden" name="action" value="">
-        <input type="submit" value="再投影">
-    </form>
-    <form action="<cfoutput>#cgi.script_name#</cfoutput>" method="post">
-        <input type="hidden" name="action" value="test"><br>
-        <div>ログイン確認</div>
-        ユーザー名：<input type="text" name="username" size="20"><br>
-        パスワード：<input type="password" name="password" size="20"><br>
-        ログイン保持<input type="checkbox" name="rememberme"><br>
-        <input type="submit" value="テスト">
-    </form>
-
-    <!---ここから認証コード--->
-
-    <cfif isDefined("form.action") and form.action is "test">
-
-        
-
+    <cfif isDefined("form.username") and isDefined("form.password")>
+        <cfparam  name="result" default="false">
+    
         <cflock timeout="10" scope="session" type="exclusive">
             <!---排他的--->
             <cfset structDelete(session, "username" )>
@@ -111,6 +94,7 @@
                             <cfcookie name="un" value="" expires="now">
                             <cfcookie name="si" value="" expires="now">
                         </cfif>
+                        <cfset result = true>
 
 
                         <cfelse>
@@ -135,109 +119,5 @@
                     </cfif>
             </cfif>
         </cftransaction>
-    </cfif>
-
-    <cfquery datasource="sample" name="q">
-        select *
-        from accounttable
-    </cfquery>
-
-    <form name="frm" action="<cfoutput>#cgi.script_name#</cfoutput>" method="post">
-        <input type="hidden" name="action2" value="delete">
-        <table border="1" >
-            <tr>
-            <th>
-               <input type="checkbox" name="allcheck" onClick="checkAll()" onCange="checkAll()">
-            </th>
-            <th>
-                ユーザ名
-            </th>
-            <th>
-                最後のログイン時間
-            </th>
-            <th>
-                ログイン回数
-            </th>
-            <th>
-                アクセス元IP
-            </th>
-        </tr>
-            <cfoutput query="q">
-                <cfif lsIsDate(lastlogin)>
-                <td>
-                    <input type="checkbox" name="selection" value="#username#">
-                </td>
-                <td>
-                    #username#
-                </td>
-                <td>
-                    #lsDateFormat(lastlogin)#
-                </td>
-                <td>
-                    #totallogins#
-                </td>
-                <td>
-                    #lastip#
-                </td>
-            </tr>
-        </cfif>
-            </cfoutput>
-        </table>
-        <br>
-        <input type="submit" value="選択したユーザの消去">
-    </form>
-
-    
-
-    <!---消去する作業--->
-    <!---actionがあるformが送信されて、それがdeleteで、チャックボックスにチェックがあったとき--->
-    <cfif isDefined("form.action2") and form.action2 is "delete" and isDefined("form.selection")>
-      
-        <cfquery datasource="sample" name="delete">
-        delete from accounttable
-        where username = 
-
-            <cfloop index="v" list="#form.selection#">
-                <cfqueryparam value="#v#" cfsqltype="cf_sql_varchar">
-            <cfif #listLast("form.selection")# is not #v#>,
-                
-                </cfif>
-            </cfloop>
-   
-        </cfquery>
-    </cfif>
-<br>
-<cfdump  var="#session#">
-<form action="<cfoutput>#cgi.script_name#</cfoutput>" method="post">
-    <input type="hidden" name="action" value="logout">
-    <input type="submit" value="ログアウト">
-</form>
-
-    <cfif isDefined("form.action") and form.action is "logout">
-        <cflock  timeout="10" scope="session" type="exclusive">
-            <cfset structDelete(session, "username")><!---正常に消去されたらture--->
-        </cflock>
-    </cfif>
-        
-    <br>
-    <br>
-
-    <form action="<cfoutput>#cgi.script_name#</cfoutput>" method="post">
-        <input type="hidden" name="action" value="forget">
-        <input type="submit" value="remembermeを外す">
-    </form>
-
-    <cfif isDefined("form.action") and form.action is "forget" and isDefined("session.username")>
-    <cfquery datasource="sample">
-    update accounttable set
-    rememberme = 0
-    where
-    username = <cfqueryparam cfsqltype="cf_sql_varchar" value="#session.username#">
-    </cfquery>
-
-    <cfcookie  name="un" expires="now">
-    <cfcookie  name="si" expires="now">
-    </cfif>
-</body>
-
+    </body>
 </html>
