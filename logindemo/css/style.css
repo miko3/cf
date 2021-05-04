@@ -1,0 +1,19 @@
+.heading {
+    width: 300px;
+    font-weight: bold;
+    color: white;
+    background-color: brown;
+}
+
+.message {
+    width: 500px;
+    height: 200px;
+    text-align: center;
+    border-color: aquamarine;
+    color: blue;
+    border: 2px;
+}
+
+.body{
+    background-color: aqua;
+}
