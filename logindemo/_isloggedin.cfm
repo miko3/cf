@@ -2,6 +2,7 @@
     <cfset dsn = application.dsn><!---アプリケーションスコープ--->
 </cflock>
 
+<!---sessionのusernameがある、かつ、cookieがあるか--->
 <cfif isDefined("session.username") is false and (isDefined("cookie.un") and isDefined("cookie.si"))>
     <cfquery datasource="sample" name="co">
     select lasstsessionid 
@@ -10,6 +11,7 @@
     (rememberme = 1 and username = <cfqueryparam value="#urldecode(cookie.un,"UTF-8")#">)
     </cfquery>
 
+<!---自動ログインにチェックをしたusernameが見つかったら--->
     <cfif co.revordcount gt 0>
         <!---大文字と小文字を区別しないで比較--->
         <cfif compareNoCase(co.lasstsessionid, cookie.si) is 0>

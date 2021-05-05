@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+
+<!---cfparmは変更しない変数--->
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -7,9 +9,12 @@
     <title>login</title>
 </head>
 <body>
+    
+    <!---
     <cflock  timeout="10" scope="application">
         <cfset dsn = application.dsn>
     </cflock>
+--->
 
     <cfif isDefined("form.username") and isDefined("form.password")>
         <cfparam  name="result" default="false">
@@ -99,11 +104,11 @@
 
                         <cfelse>
 
-                            <div class="message">
+                           
 
                             パスワードが不一致
 
-                             </div>
+                          
 
                             <!---ログインが失敗した時にセッション情報を書き換える--->
                             <cfquery name="q3" datasource="sample">
@@ -119,5 +124,22 @@
                     </cfif>
             </cfif>
         </cftransaction>
+
+        <cfif result and isDefined("session.prev_page")>
+            <cfset page = session.prev_page>
+            <cflock  timeout="10" scope="session" type="exclusive">
+                <cfset structDelete(session, "prev_page")>
+            </cflock>
+            <cflocation  url="#page#" addtoken="no">
+        </cfif>
+    </cfif>
+
+    <cfform action="#cgi.script_name#" method="post">
+        ユーザ名：<cfinput  name="username" type="text" size="20" required="yes" message="ユーザ名を入れてください"><br>
+        パスワード<cfinput  name="password" type="text" size="20"><br>
+        ログイン情報を覚えておく<cfinput  name="rememberme" type="checkbox" ><br>
+        <input type="submit" value="ログイン">
+    </cfform>
+        
     </body>
 </html>
