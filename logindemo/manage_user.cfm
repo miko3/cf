@@ -1,7 +1,7 @@
-<cfparam  name="qdn" default="sample">
+<cfparam  name="dsn" default="sample">
 <!---cfparmは変更しない変数--->
 
-<cfquery datasource="#qdn#" name="q">
+<cfquery datasource="#dsn#" name="q">
     select *
     from accounttable
 </cfquery>
@@ -34,7 +34,7 @@
     <cfdump  var="#form#" label="formの中身">
     <cftrace var="form.action">
         <cftransaction><!---1つにまとめる--->
-            <cfquery name="q2" datasource="#qdn#">
+            <cfquery name="q2" datasource="#dsn#">
             select username
             from accounttable
             where username = <cfqueryparam value="#form.username#" cfsqltype="cf_sql_varchar">
@@ -47,7 +47,7 @@
                 <cfif q2.recordcount gt 0>
                     そのユーザは既に存在します
                     <cfelse>
-                        <cfquery datasource="#qdn#" name="q3">
+                        <cfquery datasource="#dsn#" name="q3">
                         insert into accounttable
                         values
                         (

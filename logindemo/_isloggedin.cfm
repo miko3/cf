@@ -1,7 +1,8 @@
+<!---
 <cflock  timeout="10" scope="application">
     <cfset dsn = application.dsn><!---アプリケーションスコープ--->
 </cflock>
-
+--->
 <!---sessionのusernameがある、かつ、cookieがあるか--->
 <cfif isDefined("session.username") is false and (isDefined("cookie.un") and isDefined("cookie.si"))>
     <cfquery datasource="sample" name="co">

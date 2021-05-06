@@ -9,12 +9,13 @@
     <title>login</title>
 </head>
 <body>
-    
-    <!---
+
+   
+
     <cflock  timeout="10" scope="application">
         <cfset dsn = application.dsn>
     </cflock>
---->
+
 
     <cfif isDefined("form.username") and isDefined("form.password")>
         <cfparam  name="result" default="false">
@@ -29,7 +30,7 @@
         
         <cftransaction>
 
-            <cfquery name="q1" datasource="sample">
+            <cfquery name="q1" datasource="dsn">
                 select *
                 from accounttable
                 where
@@ -73,7 +74,7 @@
                         <!---ユーザ名が一致した人のログインチャレンジの上書き--->
                         <!---lasttip = ipアドレス--->
                         <!---iIf 式に一致したら、1、違えば0を返す--->
-                        <cfquery name="q2" datasource="sample">
+                        <cfquery name="q2" datasource="dsn">
                             update accounttable set
                             lastip = <cfqueryparam cfsqltype="cf_sql_varchar" value="#cgi.remote_addr#" maxlength="20">,
                             lastlogin = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#dateFormat(now(),"yyyy/mm/dd")# #timeFormat(now(),"HH:mm:ss")#">,
@@ -111,7 +112,7 @@
                           
 
                             <!---ログインが失敗した時にセッション情報を書き換える--->
-                            <cfquery name="q3" datasource="sample">
+                            <cfquery name="q3" datasource="dsn">
                                 update accounttable set
                                 lastfailedcount = <cfqueryparam cfsqltype="cf_sql_integer" value="#q1.lastfailedcount+1#">,
                                 lastfailedip = <cfqueryparam cfsqltype="cf_sql_varchar" value="#cgi.remote_addr#" maxlength="20">,

@@ -1,2 +1,4 @@
-<cfapplication name="dsn" sessionmanagement="yes">
+<cfapplication name="logincheck" sessionmanagement="yes">
 <cfset setEncoding("FORM", "utf-8")>
+
+
