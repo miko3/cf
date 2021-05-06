@@ -29,8 +29,7 @@
         <cfset r.message = "">
         <cfset r.note = "">
 
-<!---       <cfif not logintest.recordcount gt 0>--->
-        <cfif not logintest.recordcount>
+        <cfif not logintest.recordcount gt 0>
             
             <cfset r.message = "失敗">
             <cfelse>
@@ -60,7 +59,7 @@
     </cfquery>
 
     <cfif adduserck.recordcount gt 0>
-        <cfset message = "そのユーザは既に存在しているため登録できません">
+        <cfset message = "#arguments.username#様は既に存在しているため登録できません">
         <cfelse>
 
         <cfquery datasource="sample" name="useradd">
@@ -71,6 +70,25 @@
         <cfset message = "#arguments.username#様を追加しました">
     </cfif>
     <cfreturn message>
+</cffunction>
+
+
+<!---ユーザの消去機能--->
+<cffunction  name="delete" access="public" output="no">
+    <cfargument  name="selection" type="string" required="true">
+    <cfquery datasource="sample" name="userdelete">
+    delete from accounttable
+    where username in ('#arguments.selection#')
+    </cfquery>
+    <cfset message = "#arguments.selection#を消去しました">
+    <cfreturn message>
+</cffunction>
+
+
+<!---ログアウト機能--->
+<cffunction  name="logout" access="public" output="no">
+    <cflogout>
+    <cflocation  url="./login.cfm">
 </cffunction>
 
 </cfcomponent>

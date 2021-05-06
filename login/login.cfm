@@ -28,6 +28,8 @@
         ログイン情報を覚えておく<cfinput type="checkbox" name="rememberme"><br>
         <input  type="submit">
     </cfform>
+
+    
    
 </body>
 </html>
