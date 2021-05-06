@@ -19,6 +19,7 @@
         <cflocation  url="./ok.cfm" addtoken="no">
     </cfif>
     <cfoutput>ログイン#r.message#です。</cfoutput>
+    <cfoutput>#r.note#</cfoutput>
     </cfif>
 
     <h2>ログイン</h2>
@@ -26,6 +27,7 @@
         ユーザー名:<cfinput type="text" name="username" size="20"><br>
         パスワード:<cfinput type="password" name="password" size="20"><br>
         ログイン情報を覚えておく<cfinput type="checkbox" name="rememberme"><br>
+        <input type="hidden" value="logintest">
         <input  type="submit">
     </cfform>
 

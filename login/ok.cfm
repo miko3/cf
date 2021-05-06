@@ -1,5 +1,8 @@
 <h2>ログイン成功</h2>
 
+<cfoutput>#session.username#</cfoutput>
+
+<cfinclude  template="_isloggedin.cfm">
 <cfinvoke component="login_function" method="list" returnVariable="userlist">
 
     <form action="<cfoutput>#cgi.script_name#</cfoutput>" method="post">
@@ -31,7 +34,7 @@
                 #username#
             </td>
             <td>
-                #lastlogin#
+                #lsDateTimeFormat(lastlogin,"YYYY/mm/dd HH:SS:MM")#
             </td>
             <td>
                 #totallogins#
@@ -75,9 +78,10 @@
         <input type="hidden" name="action" value="add">
         ユーザー名：<input type="text" name="username" size="20"><br>
         パスワード：<input type="password" name="password" size="20"><br>
+        <br>
         <input type="submit" value="追加">
     </form>
-
+    
 
 
 
@@ -91,5 +95,18 @@
     <form action="<cfoutput>#cgi.script_name#</cfoutput>" method="post">
         <input type="hidden" name="action" value="logout">
         <input type="submit" value="ログアウト">
+    </form>
+    
+
+
+     <!---ログイン情報を忘れる--->
+     <cfif isDefined("form.action") and form.action is "forget">
+        <cfinvoke  method="forget" component="login_function" returnvariable="message">
+        </cfinvoke>
+    </cfif>
+
+    <form action="<cfoutput>#cgi.script_name#</cfoutput>" method="post">
+        <input type="hidden" name="action" value="forget">
+        <input type="submit" value="cookieの消去">
     </form>
 
