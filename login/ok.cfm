@@ -69,7 +69,7 @@
             <cfinvokeargument  name="username"  value="#form.username#">
             <cfinvokeargument  name="password"  value="#form.password#">  
         </cfinvoke>
-        <cfoutput>#message#</cfoutput>     
+        <cfoutput>#message#</cfoutput>
     </cfif>
 
     <h2>ユーザの追加</h2>

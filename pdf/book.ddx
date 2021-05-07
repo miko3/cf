@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DDX xmlns="http://ns.adobe.com/DDX/1.0/"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://ns.adobe.com/DDX/1.0/coldfusion_ddx.xsd">
+
+<pdf result="Out1">
+<pdf source="Doc1">
+<Watermark rotation="45" opacity="50%">
+<StyledText>
+<p font-size="100px" font-weight="bold" color="gray" font="Arial">ColfFusion
+</p>
+</StyledText>
+</Watermark>
+</pdf>
+</pdf>
+
+</DDX>
