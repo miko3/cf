@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #map {
+            height: 400px;
+            width: 400px;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <script>
+
+        const mapEle = document.getElementById('map');
+
+        function initmap() {
+
+            const location = { lat: 35.4255496750643, lng: 136.8448776548205 }//東京タワー
+
+            // 地図初期化
+            const map = new google.maps.Map(mapEle, {
+                zoom: 15,//必須zoomレベル
+                center: location,//地図の座標（東京タワー）
+                draggable : true,
+                mapTypeControl: false
+            }
+            );
+
+        };
+
+     
+    </script>
+
+    <script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh-InKW4XDJ0umXI4OKaJ2fPnXWqS5GeE&callback=initmap"></script>
+
+
+</body>
+
+</html>

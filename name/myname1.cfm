@@ -7,8 +7,15 @@
     <title>Document</title>
 </head>
 <body>
+
+    <cffunction name="myname">
+        <cfargument name="fName">
+        <cfargument name="lName">
+        <cfset retval = fName & lName & "です">
+        <cfreturn retval>
+    </cffunction>
+
+    <cfoutput>#myname("岩井","すみれ")#</cfoutput>
     
-    <cfoutput>#request.name#</cfoutput>
-  
 </body>
 </html>

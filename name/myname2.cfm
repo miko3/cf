@@ -7,8 +7,17 @@
     <title>Document</title>
 </head>
 <body>
+    <cfprocessingdirective pageencoding="UTF-8">
+
+    <cfscript>
+       
+        function myname(lname,fname) {
+            retval = lname & fname;
+            return retval;
+        }
+    </cfscript>
+
+    <cfoutput>#myname("岩井","菫")#</cfoutput>
     
-    <cfoutput>#request.name#</cfoutput>
-  
 </body>
 </html>
